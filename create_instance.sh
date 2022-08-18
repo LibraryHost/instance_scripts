@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 name=$1
@@ -7,6 +8,7 @@ instance_number=$4
 email=$5
 ram=$6
 version=$7
+work_dir=/root/created
 
 echo "NAME: ${name}"
 echo "DB_NAME: ${db_name}"
@@ -17,12 +19,12 @@ echo "RAM: ${ram}"
 echo "VERSION: ${version}"
 
 # create DB, users, import file
-echo "CREATE DATABASE ${db_name};" > ./${name}_migrate/${db_name}_create.sql
-echo "CREATE USER '${db_name}'@'localhost' IDENTIFIED BY '${db_password}';" >> ./${name}_migrate/${db_name}_create.sql
-echo "GRANT ALL PRIVILEGES ON ${db_name}.* TO '${db_name}'@'localhost';" >> ./${name}_migrate/${db_name}_create.sql
-echo "FLUSH PRIVILEGES;" >> ./${name}_migrate/${db_name}_create.sql
-mysql --defaults-file=/root/.my.cnf < ./${name}_migrate/${db_name}_create.sql
-mysql --defaults-file=/root/.my.cnf ${db_name} < ./${name}_migrate/${db_name}_migration.sql
+echo "CREATE DATABASE ${db_name};" > ${work_dir}/${db_name}_create.sql
+echo "CREATE USER '${db_name}'@'localhost' IDENTIFIED BY '${db_password}';" >> ${work_dir}/${db_name}_create.sql
+echo "GRANT ALL PRIVILEGES ON ${db_name}.* TO '${db_name}'@'localhost';" >> ${work_dir}/${db_name}_create.sql
+echo "FLUSH PRIVILEGES;" >> ${work_dir}/${db_name}_create.sql
+mysql --defaults-file=/root/.my.cnf < ${work_dir}/${db_name}_create.sql
+mysql --defaults-file=/root/.my.cnf ${db_name} < ${work_dir}/${db_name}_migration.sql
 echo "DONE WITH DB!"
 
 #CREATE DIRECTORIES, PLUGINS
