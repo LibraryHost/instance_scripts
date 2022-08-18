@@ -70,5 +70,5 @@ fi
 
 #DOCKER CONTAINER
 
-docker run --name ${db_name} -d -it --net=host -e ARCHIVESSPACE_DB_TYPE=mysql -e ARCHIVESSPACE_DB_HOST_TYPE=external -e ASPACE_JAVA_XMX=-Xmx${ram}m -v /var/www/${db_name}/config:/archivesspace/config -v /var/www/${db_name}/plugins:/archivesspace/plugins archivesspace/archivesspace:${version}
+docker run --name ${db_name}-${ram} -d -it --net=host -e ARCHIVESSPACE_DB_TYPE=mysql -e ARCHIVESSPACE_DB_HOST_TYPE=external -e ASPACE_JAVA_XMX=-Xmx${ram}m -v /var/www/${db_name}/config:/archivesspace/config -v /var/www/${db_name}/plugins:/archivesspace/plugins archivesspace/archivesspace:${version}
 
