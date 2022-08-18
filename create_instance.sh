@@ -24,7 +24,7 @@ echo "CREATE USER '${db_name}'@'localhost' IDENTIFIED BY '${db_password}';" >> $
 echo "GRANT ALL PRIVILEGES ON ${db_name}.* TO '${db_name}'@'localhost';" >> ${work_dir}/${db_name}_create.sql
 echo "FLUSH PRIVILEGES;" >> ${work_dir}/${db_name}_create.sql
 mysql --defaults-file=/root/.my.cnf < ${work_dir}/${db_name}_create.sql
-mysql --defaults-file=/root/.my.cnf ${db_name} < ${work_dir}/${db_name}_migration.sql
+mysql --defaults-file=/root/.my.cnf ${db_name} < ${work_dir}/${db_name}_create.sql
 echo "DONE WITH DB!"
 
 #CREATE DIRECTORIES, PLUGINS
