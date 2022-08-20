@@ -8,7 +8,6 @@ email=$5
 ram=$6
 version=$7
 work_dir=/root/migrated
-to_migrate_dir=/root/to_migrate
 
 echo "NAME: ${name}"
 echo "DB_NAME: ${db_name}"
@@ -19,8 +18,8 @@ echo "RAM: ${ram}"
 echo "VERSION: ${version}"
 
 #Unzip
-unzip ${to_migrate_dir}/${name}_migrate.zip -d ${work_dir}/${name}_migrate/
-unzip ${to_migrate_dir}/${name}_migrate/plugins.zip -d ${work_dir}/${name}_migrate/
+unzip ${work_dir}/${name}_migrate.zip -d ${work_dir}/${name}_migrate/
+unzip ${work_dir}/${name}_migrate/plugins.zip -d ${work_dir}/${name}_migrate/
 
 # create DB, users, import file
 echo "CREATE DATABASE ${db_name};" > ${work_dir}/${name}_migrate/${db_name}_create.sql

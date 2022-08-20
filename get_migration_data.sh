@@ -42,5 +42,5 @@ ssh $host "sudo /bin/sh -c 'cd /var/www/${1} && zip -r /root/${dir}/plugins.zip 
 ssh $host "sudo /bin/sh -c 'cd /root && zip -r ${dir}.zip ${dir}'"
 ssh $host "sudo cp /root/${dir}.zip /home/manny"
 scp -r $host:$dir.zip .
-scp -r $dir.zip root@$target:/root/to_migrate
+scp -r $dir.zip root@$target:/root/migrated
 rm $dir.zip
