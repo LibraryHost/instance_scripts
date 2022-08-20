@@ -43,3 +43,4 @@ ssh $host "sudo /bin/sh -c 'cd /root && zip -r ${dir}.zip ${dir}'"
 ssh $host "sudo cp /root/${dir}.zip /home/manny"
 scp -r $host:$dir.zip .
 scp -r $dir.zip root@$target:/root/to_migrate
+rm $dir.zip

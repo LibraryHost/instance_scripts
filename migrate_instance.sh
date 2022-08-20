@@ -19,7 +19,7 @@ echo "RAM: ${ram}"
 echo "VERSION: ${version}"
 
 #Unzip
-unzip ${to_migrate_dir}/${name}_migrate.zip
+unzip ${to_migrate_dir}/${name}_migrate.zip -d ${work_dir}/${name}_migrate/
 unzip ${to_migrate_dir}/${name}_migrate/plugins.zip -d ${work_dir}/${name}_migrate/
 
 # create DB, users, import file
