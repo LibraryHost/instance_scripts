@@ -7,6 +7,8 @@ instance_number=$4
 email=$5
 ram=$6
 version=$7
+work_dir=/root/migrated
+to_migrate_dir=/root/to_migrate
 
 echo "NAME: ${name}"
 echo "DB_NAME: ${db_name}"
@@ -17,21 +19,21 @@ echo "RAM: ${ram}"
 echo "VERSION: ${version}"
 
 #Unzip
-unzip ${name}_migrate.zip
-unzip ${name}_migrate/plugins.zip -d ${name}_migrate/
+unzip ${to_migrate_dir}/${name}_migrate.zip
+unzip ${to_migrate_dir}/${name}_migrate/plugins.zip -d ${work_dir}/${name}_migrate/
 
 # create DB, users, import file
-echo "CREATE DATABASE ${db_name};" > ./${name}_migrate/${db_name}_create.sql
-echo "CREATE USER '${db_name}'@'localhost' IDENTIFIED BY '${db_password}';" >> ./${name}_migrate/${db_name}_create.sql
-echo "GRANT ALL PRIVILEGES ON ${db_name}.* TO '${db_name}'@'localhost';" >> ./${name}_migrate/${db_name}_create.sql
-echo "FLUSH PRIVILEGES;" >> ./${name}_migrate/${db_name}_create.sql
-mysql --defaults-file=/root/.my.cnf < ./${name}_migrate/${db_name}_create.sql
-mysql --defaults-file=/root/.my.cnf ${db_name} < ./${name}_migrate/${db_name}_migration.sql
+echo "CREATE DATABASE ${db_name};" > ${work_dir}/${name}_migrate/${db_name}_create.sql
+echo "CREATE USER '${db_name}'@'localhost' IDENTIFIED BY '${db_password}';" >> ${work_dir}/${name}_migrate/${db_name}_create.sql
+echo "GRANT ALL PRIVILEGES ON ${db_name}.* TO '${db_name}'@'localhost';" >> ${work_dir}/${name}_migrate/${db_name}_create.sql
+echo "FLUSH PRIVILEGES;" >> ${work_dir}/${name}_migrate/${db_name}_create.sql
+mysql --defaults-file=/root/.my.cnf < ${work_dir}/${name}_migrate/${db_name}_create.sql
+mysql --defaults-file=/root/.my.cnf ${db_name} < ${work_dir}/${name}_migrate/${db_name}_migration.sql
 echo "DONE WITH DB!"
 
 #CREATE DIRECTORIES, PLUGINS
 mkdir -p /var/www/${db_name}/{logs,plugins,config}
-cp -r ./${name}_migrate/plugins/* /var/www/${db_name}/plugins
+cp -r ${work_dir}/${name}_migrate/plugins/* /var/www/${db_name}/plugins
 rm -rf /var/www/${db_name}/plugins/cat_in_a_box
 rm -rf /var/www/${db_name}/plugins/lcnaf
 rm -rf /var/www/${db_name}/plugins/newrelic
