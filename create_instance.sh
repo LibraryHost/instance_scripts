@@ -8,6 +8,7 @@ instance_number=$4
 email=$5
 ram=$6
 version=$7
+domain=$8
 work_dir=/root/created
 
 echo "NAME: ${name}"
@@ -17,6 +18,7 @@ echo "INSTANCE NUMBER: ${instance_number}"
 echo "EMAIL: ${email}"
 echo "RAM: ${ram}"
 echo "VERSION: ${version}"
+echo "DOMAIN: ${domain}"
 
 # create DB, users, import file
 echo "CREATE DATABASE ${db_name};" > ${work_dir}/${db_name}_create.sql
@@ -35,7 +37,7 @@ cp -r /root/instance_files/plugins32/* /var/www/${db_name}/plugins
 cp -r ./config.rb.template /var/www/${db_name}/config/config.rb
 
 sed -i "s/INSTANCE/${db_name}/g" /var/www/${db_name}/config/config.rb
-sed -i "s/DOMAIN/${name}/g" /var/www/${db_name}/config/config.rb
+sed -i "s/DOMAIN/${domain}/g" /var/www/${db_name}/config/config.rb
 sed -i "s/PASSWORD/${db_password}/g" /var/www/${db_name}/config/config.rb
 sed -i "s/XX/${instance_number}/g" /var/www/${db_name}/config/config.rb
 sed -i "s/EMAIL/${email}/g" /var/www/${db_name}/config/config.rb
@@ -47,7 +49,7 @@ echo "DONE WITH ASPACE DIR!"
 cp -r ./instance.conf.template /etc/apache2/sites-available/${db_name}.conf
 sed -i "s/INSTANCE/${db_name}/g" /etc/apache2/sites-available/${db_name}.conf
 sed -i "s/XX/${instance_number}/g" /etc/apache2/sites-available/${db_name}.conf
-sed -i "s/DOMAIN/${name}/g" /etc/apache2/sites-available/${db_name}.conf
+sed -i "s/DOMAIN/${domain}/g" /etc/apache2/sites-available/${db_name}.conf
 a2ensite ${db_name}
 service apache2 restart
 
