@@ -9,7 +9,8 @@ email=$5
 ram=$6
 version=$7
 domain=$8
-work_dir=/root/created
+db_file=$9
+work_dir=/root/moved
 
 echo "NAME: ${name}"
 echo "DB_NAME: ${db_name}"
@@ -26,6 +27,7 @@ echo "CREATE USER '${db_name}'@'localhost' IDENTIFIED BY '${db_password}';" >> $
 echo "GRANT ALL PRIVILEGES ON ${db_name}.* TO '${db_name}'@'localhost';" >> ${work_dir}/${db_name}_create.sql
 echo "FLUSH PRIVILEGES;" >> ${work_dir}/${db_name}_create.sql
 mysql --defaults-file=/root/.my.cnf < ${work_dir}/${db_name}_create.sql
+mysql --defaults-file=/root/.my.cnf ${db_name} < ${db_file}
 echo "DONE WITH DB!"
 
 #CREATE DIRECTORIES, PLUGINS
