@@ -699,10 +699,13 @@ AppConfig[:docs_url] = "http://localhost:XX088"
   AppConfig[:pui_email_enabled] = true
   AppConfig[:pui_request_email_fallback_to_address] = 'EMAIL'
   AppConfig[:pui_request_email_fallback_from_address] = 'noreply@libraryhost.com'
-  AppConfig[:pui_email_delivery_method] = :sendmail
-  AppConfig[:pui_email_sendmail_settings] = {
-      location: '/usr/sbin/sendmail',
-        arguments: '-i'
+  AppConfig[:pui_email_smtp_settings] = {
+      address:              'smtp.sendgrid.net',
+      port:                 587,
+      user_name:            'apikey',
+      password:             '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',
+      authentication:       'plain',
+      enable_starttls_auto: true,
   }
   AppConfig[:pui_email_perform_deliveries] = true
   AppConfig[:pui_email_raise_delivery_errors] = false
