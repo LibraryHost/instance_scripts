@@ -689,14 +689,15 @@ AppConfig[:backend_log_level] = "warn"
 AppConfig[:enable_docs] = false
 
 AppConfig[:backend_url] = "http://localhost:XX089"
-AppConfig[:frontend_url] = "http://localhost:XX080"
+AppConfig[:frontend_url] = "http://localhost:XX083"
 AppConfig[:public_url] = "http://localhost:XX081"
-AppConfig[:oai_url] = "http://localhost:XX082"
+AppConfig[:oai_url] = "http://localhost:XX084"
 AppConfig[:solr_url] = "http://localhost:XX090"
 AppConfig[:indexer_url] = "http://localhost:XX091"
 AppConfig[:docs_url] = "http://localhost:XX088"
 
   AppConfig[:pui_email_enabled] = true
+  AppConfig[:pui_email_delivery_method] = :smtp
   AppConfig[:pui_request_email_fallback_to_address] = 'EMAIL'
   AppConfig[:pui_request_email_fallback_from_address] = 'noreply@libraryhost.com'
   AppConfig[:pui_email_smtp_settings] = {

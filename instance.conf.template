@@ -5,7 +5,7 @@
      ErrorLog /var/www/INSTANCE/logs/error.log
      CustomLog /var/www/INSTANCE/logs/access.log combined
 
-     ProxyPassMatch "^/admin/(assets/.*)$" "http://localhost:XX080/$1"
+     ProxyPassMatch "^/admin/(assets/.*)$" "http://localhost:XX083/$1"
 
      ProxyRequests off
      ProxyPreserveHost On
@@ -15,8 +15,8 @@
           Allow from all
      </Proxy>
 
-     ProxyPass /admin http://localhost:XX080/admin
-     ProxyPassReverse /admin http://localhost:XX080/admin
+     ProxyPass /admin http://localhost:XX083/admin
+     ProxyPassReverse /admin http://localhost:XX083/admin
      ProxyPass / http://localhost:XX081/
      ProxyPassReverse / http://localhost:XX081/
 </VirtualHost>
@@ -33,7 +33,7 @@
      ErrorLog /var/www/INSTANCE/logs/error.log
      CustomLog /var/www/INSTANCE/logs/access.log combined
 
-     ProxyPassMatch "^/admin/(assets/.*)$" "http://localhost:XX080/$1"
+     ProxyPassMatch "^/admin/(assets/.*)$" "http://localhost:XX083/$1"
      RequestHeader set X-Forwarded-Proto "https"
 
      ProxyRequests off
@@ -44,8 +44,8 @@
           Allow from all
      </Proxy>
 
-     ProxyPass /admin http://localhost:XX080/admin
-     ProxyPassReverse /admin http://localhost:XX080/admin
+     ProxyPass /admin http://localhost:XX083/admin
+     ProxyPassReverse /admin http://localhost:XX083/admin
      ProxyPass / http://localhost:XX081/
      ProxyPassReverse / http://localhost:XX081/
 </VirtualHost>
