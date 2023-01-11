@@ -90,3 +90,35 @@
      ServerName DOMAIN-api.libraryhost.com
      Redirect permanent / https://DOMAIN-api.libraryhost.com
 </VirtualHost>
+<VirtualHost *:443>
+     ServerAdmin webmaster@localhost
+     ServerName DOMAIN-oai.libraryhost.com
+
+     SSLEngine on
+
+     SSLCertificateFile      /etc/ssl/certs/STAR_libraryhost_com.crt
+     SSLCertificateKeyFile /etc/ssl/private/server.key
+     SSLCACertificateFile /etc/ssl/certs/STAR_libraryhost_com.ca-bundle
+
+     ErrorLog /var/www/INSTANCE/logs/error.log
+     CustomLog /var/www/INSTANCE/logs/access.log combined
+
+     RequestHeader set X-Forwarded-Proto "https"
+
+     ProxyRequests off
+     ProxyPreserveHost On
+
+     <Proxy *>
+          Order deny,allow
+          Allow from all
+     </Proxy>
+
+     ProxyPass / http://localhost:XX084/
+     ProxyPassReverse / http://localhost:XX084/
+</VirtualHost>
+<VirtualHost *:80>
+     ServerAdmin webmaster@localhost
+     ServerName DOMAIN-oai.libraryhost.com
+     Redirect permanent / https://INSTANCE-oai.libraryhost.com
+</VirtualHost>
+
