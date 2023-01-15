@@ -1,5 +1,5 @@
 #!/bin/bash
 
-instance_name = $1
+instance_name=$1
 
 docker restart ${instance_name}
