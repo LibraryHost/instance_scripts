@@ -62,6 +62,13 @@ echo "AppConfig[:solr_url] = 'http://localhost:8983/solr/${db_name}'" >> /var/ww
 echo "DONE WITH SOLR!"
 fi
 
+if [[ $version = "3.3.1"  ]]
+then
+sudo -H -u solr bash -c "/opt/solr/bin/solr create -c ${db_name} -d archivesspace331"
+echo "AppConfig[:solr_url] = 'http://localhost:8983/solr/${db_name}'" >> /var/www/${db_name}/config/config.rb
+echo "DONE WITH SOLR!"
+fi
+
 #DOCKER CONTAINER
 
 docker run --name ${db_name}-${ram} -d -it --net=host -e ARCHIVESSPACE_DB_TYPE=mysql -e ARCHIVESSPACE_DB_HOST_TYPE=external -e ASPACE_JAVA_XMX=-Xmx${ram}m -v /var/www/${db_name}/config:/archivesspace/config -v /var/www/${db_name}/plugins:/archivesspace/plugins archivesspace/archivesspace:${version}
