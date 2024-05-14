@@ -708,5 +708,6 @@ AppConfig[:docs_url] = "http://localhost:XX088"
       authentication:       'plain',
       enable_starttls_auto: true,
   }
-  AppConfig[:pui_email_perform_deliveries] = true
+  AppConfig[:email_perform_deliveries] = true
   AppConfig[:pui_email_raise_delivery_errors] = false
+AppConfig[:pui_email_enabled] = false
