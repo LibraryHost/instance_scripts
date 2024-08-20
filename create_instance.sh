@@ -76,6 +76,22 @@ echo "AppConfig[:solr_url] = 'http://localhost:8983/solr/${db_name}'" >> /var/ww
 echo "DONE WITH SOLR!"
 fi
 
+if [[ $version = "3.5.0"  ]]
+then
+sudo -H -u solr bash -c "/opt/solr/bin/solr create -c ${db_name} -d archivesspace350"
+echo "AppConfig[:solr_url] = 'http://localhost:8983/solr/${db_name}'" >> /var/www/${db_name}/config/config.rb
+echo "DONE WITH SOLR!"
+fi
+
+if [[ $version = "3.5.1"  ]]
+then
+sudo -H -u solr bash -c "/opt/solr/bin/solr create -c ${db_name} -d archivesspace351"
+echo "AppConfig[:solr_url] = 'http://localhost:8983/solr/${db_name}'" >> /var/www/${db_name}/config/config.rb
+echo "DONE WITH SOLR!"
+fi
+
+
+
 
 
 #DOCKER CONTAINER
