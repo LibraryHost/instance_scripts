@@ -20,6 +20,15 @@ echo "RAM: ${ram}"
 echo "VERSION: ${version}"
 echo "DOMAIN: ${domain}"
 
+read -p "Does this look OK? Press 'y' to confirm: " -r REPLY
+if [ "$REPLY" = "y" ];
+then
+  echo "Proceeding..."
+else
+  echo "Aborting."
+  exit
+fi
+
 # create DB, users, import file
 echo "CREATE DATABASE ${db_name};" > ${work_dir}/${db_name}_create.sql
 echo "CREATE USER '${db_name}'@'localhost' IDENTIFIED BY '${db_password}';" >> ${work_dir}/${db_name}_create.sql
