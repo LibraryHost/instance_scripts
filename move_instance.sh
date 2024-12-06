@@ -49,6 +49,17 @@ popd
 
 scp /root/to_move/$folder_name.zip root@$target_server:/root/moved
 
+echo "USEFUL INFO:"
+echo "============"
+grep "jdbc:mysql://localhost:3306" $work_dir/$folder_name/$folder_name/config/config.rb | grep -v "#"
+echo ""
+grep "localhost:8983" $work_dir/$folder_name/$folder_name/config/config.rb
+echo ""
+docker ps -a | grep $folder_name
+echo ""
+find $work_dir/$folder_name | grep ".conf$"
+echo ""
+grep "localhost:" $work_dir/$folder_name/$apache_name.conf
 
 
 
