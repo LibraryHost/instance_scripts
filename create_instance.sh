@@ -106,6 +106,16 @@ echo "AppConfig[:solr_url] = 'http://localhost:8983/solr/${db_name}'" >> /var/ww
 echo "DONE WITH SOLR!"
 fi
 
+# ASpace 4 needs a newer version of solr, which we'll get from Docker.
+if [[ $version = "4.0.0"  ]]
+then
+docker run -d -p ${instance_number}983:8983 --name ${db_name}-solr -t archivesspace/solr:4.0.0
+docker exec -it --user solr ${db_name}-solr bin/solr create_core -c ${db_name} -d archivesspace
+
+echo "AppConfig[:solr_url] = 'http://localhost:${instance_number}983/solr/${db_name}'" >> /var/www/${db_name}/config/config.rb
+echo "DONE WITH SOLR!"
+fi
+
 #DOCKER CONTAINER
 
 docker run --name ${db_name}-${ram} -d -it --net=host -e ARCHIVESSPACE_DB_TYPE=mysql -e ARCHIVESSPACE_DB_HOST_TYPE=external -e ASPACE_JAVA_XMX=-Xmx${ram}m -v /var/www/${db_name}/config:/archivesspace/config -v /var/www/${db_name}/plugins:/archivesspace/plugins archivesspace/archivesspace:${version}
