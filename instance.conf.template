@@ -1,6 +1,7 @@
 <VirtualHost *:80>
      ServerAdmin webmaster@localhost
      ServerName DOMAIN.libraryhost.com
+     Include crawler_tweaks.conf
 
      ErrorLog /var/www/INSTANCE/logs/error.log
      CustomLog /var/www/INSTANCE/logs/access.log combined
@@ -23,6 +24,7 @@
 <VirtualHost *:443>
      ServerAdmin webmaster@localhost
      ServerName DOMAIN.libraryhost.com
+     Include crawler_tweaks.conf
 
      SSLEngine on
 

@@ -704,7 +704,7 @@ AppConfig[:docs_url] = "http://localhost:XX088"
       address:              'smtp.sendgrid.net',
       port:                 587,
       user_name:            'apikey',
-      password:             'MAILKEY',
+      password:             'APIKEY',
       authentication:       'plain',
       enable_starttls_auto: true,
   }

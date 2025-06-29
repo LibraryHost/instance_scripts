@@ -40,7 +40,7 @@ echo "DONE WITH DB!"
 #CREATE DIRECTORIES, PLUGINS
 mkdir -p /var/www/${db_name}/{logs,plugins,config}
 cp -r /root/instance_files/plugins32/* /var/www/${db_name}/plugins
-#chmod 644 /var/www/${db_name}/plugins/local/public/assets/*
+chmod 644 /var/www/${db_name}/plugins/local/public/assets/*
 
 cp -r ./config.rb.template /var/www/${db_name}/config/config.rb
 
@@ -49,7 +49,6 @@ sed -i "s/DOMAIN/${domain}/g" /var/www/${db_name}/config/config.rb
 sed -i "s/PASSWORD/${db_password}/g" /var/www/${db_name}/config/config.rb
 sed -i "s/XX/${instance_number}/g" /var/www/${db_name}/config/config.rb
 sed -i "s/EMAIL/${email}/g" /var/www/${db_name}/config/config.rb
-
 echo "DONE WITH ASPACE DIR!"
 
 #APACHE CONF
@@ -116,7 +115,44 @@ echo "AppConfig[:solr_url] = 'http://localhost:${instance_number}983/solr/${db_n
 echo "DONE WITH SOLR!"
 fi
 
+if [[ $version = "4.1.0"  ]]
+then
+docker run -d -p ${instance_number}983:8983 --name ${db_name}-solr -t archivesspace/solr:4.1.0
+docker exec -it --user solr ${db_name}-solr bin/solr create_core -c ${db_name} -d archivesspace
+
+echo "AppConfig[:solr_url] = 'http://localhost:${instance_number}983/solr/${db_name}'" >> /var/www/${db_name}/config/config.rb
+echo "DONE WITH SOLR!"
+fi
+
 #DOCKER CONTAINER
 
-docker run --name ${db_name}-${ram} -d -it --net=host -e ARCHIVESSPACE_DB_TYPE=mysql -e ARCHIVESSPACE_DB_HOST_TYPE=external -e ASPACE_JAVA_XMX=-Xmx${ram}m -v /var/www/${db_name}/config:/archivesspace/config -v /var/www/${db_name}/plugins:/archivesspace/plugins archivesspace/archivesspace:${version}
+if [[ $ram = "2048"  ]]
+then
+  cpu="1"
+fi
+
+if [[ $ram = "4096"  ]]
+then
+  cpu="2"
+fi
+
+if [[ $ram = "8192"  ]]
+then
+  cpu="4"
+fi
+
+if [[ $ram = "16384"  ]]
+then
+  cpu="6"
+fi
+
+mkdir /root/containers/${db_name}
+cp ./docker-compose.yml.template /root/containers/${db_name}/docker-compose.yml
+
+sed -i "s/INSTANCE/${db_name}/g" /root/containers/${db_name}/docker-compose.yml
+sed -i "s/RAM/${ram}/g" /root/containers/${db_name}/docker-compose.yml
+sed -i "s/CPU/${cpu}/g" /root/containers/${db_name}/docker-compose.yml
+sed -i "s/VER/${version}/g" /root/containers/${db_name}/docker-compose.yml
+
+docker compose -f /root/containers/${db_name}/docker-compose.yml up -d
 

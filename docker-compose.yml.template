@@ -1,0 +1,28 @@
+---
+services:
+  app:
+    container_name: INSTANCE
+    image: archivesspace/archivesspace:VER
+    volumes:
+    - "/var/www/INSTANCE/plugins:/archivesspace/plugins"
+    - "/var/www/INSTANCE/config:/archivesspace/config"
+    environment:
+    - ARCHIVESSPACE_DB_TYPE=mysql
+    - ARCHIVESSPACE_DB_HOST_TYPE=external
+    - ARCHIVESSPACE_LOGS=/dev/null
+    - LANG=C.UTF-8
+    - TZ=UTC
+    - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - DEBIAN_FRONTEND=noninteractive
+    - ASPACE_JAVA_XMX=-XmxRAMm
+    deploy:
+      resources:
+        limits:
+          cpus: 'CPU'
+    network_mode: host
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 100m
+        max-file: '5'
